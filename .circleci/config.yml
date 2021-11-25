@@ -15,3 +15,15 @@ jobs:
       - run:
           name: run and test
           command: bundle exec fastlane $FASTLANE_LANE
+workflows:
+  version: 2.1
+  test_release:
+    jobs:
+      - run_test
+      - beta_dev_deploygate:
+          requires:
+            - run_test
+          filters:
+            branches:
+                only:
+                    - develop
